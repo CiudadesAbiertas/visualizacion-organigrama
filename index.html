@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<!--
+Copyright 2018 Ayuntamiento de A Coruña, Ayuntamiento de Madrid, Ayuntamiento de Santiago de Compostela, Ayuntamiento de Zaragoza, Entidad Pública Empresarial Red.es
+
+Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the European Commission - subsequent versions of the EUPL (the "Licence");
+You may not use this work except in compliance with the Licence.
+You may obtain a copy of the Licence at:
+
+https://joinup.ec.europa.eu/software/page/eupl
+
+Unless required by applicable law or agreed to in writing, software distributed under the Licence is distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the Licence for the specific language governing permissions and limitations under the Licence.
+-->
+<html lang="es" dir="ltr">
+
+<head>
+	<!-- Metadatos -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Visualización del organigrama">
+	<meta name="author" content="Localidata">
+	<title data-i18n="organigrama">Organigrama</title>
+
+	<!-- Bootstrap Core CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+
+	<!-- Custom Fonts -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css" rel="stylesheet"
+        type="text/css" />
+
+	<!-- Hojas de estilos internos -->
+	<link rel="stylesheet" href="../comunV2/dist/css/main.css">
+	<link rel="stylesheet" href="../comunV2/dist/css/ciudadesAbiertas.css">
+	<link rel="stylesheet" href="dist/css/organigrama.css">
+	<link rel="stylesheet" href="dist/css/custom.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" type="image/x-icon" href="../comunV2/dist/images/favicon.ico">
+</head>
+
+<body>
+	<div class="modal fade bd-loading-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1"
+		role="dialog">
+		<div class="modal-dialog modal-lg modal-dialog-centered">
+			<div class="modal-content modal-loading">
+				<span class="fa fa-spinner fa-spin fa-5x"></span>
+			</div>
+		</div>
+	</div>
+
+	<!-- Barra de navegación -->
+	<nav class="navbar navbar-default navbar-static-top margin-bottom0 presentacion fondo_cabecera" aria-label="Barra de navegación" >
+		<div class="presentacion-header row">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar" role="tablist" aria-label="Pestañas">
+					<ol class="nav navbar-nav">
+						<li id="liInicio">
+							<button id="buttonInicio" type="button" role="tab" aria-selected="true"
+								aria-controls="capaInicio" class="btn btn-link btn-lg" data-i18n="inicio"
+								onclick="cambioCapaInicio()">Inicio</button>
+						</li>
+						<li id="liBuscador">
+							<button id="buttonBuscador" type="button" role="tab" aria-selected="false"
+								aria-controls="capaBuscador" class="btn btn-link btn-lg" data-i18n="buscador"
+								onclick="cambioCapaBuscador()">Buscador</button>
+						</li>
+						<li id="liAyuda">
+							<button id="buttonAyuda" type="button" role="tab" aria-selected="false"
+								aria-controls="capaAyuda" class="btn btn-link btn-lg" data-i18n="ayuda"
+								onclick="cambioCapaAyuda()">Ayuda</button>
+						</li>
+					</ol>
+					<ol class="nav navbar-nav navbar-right">
+						<li>
+							<button type="button" id="menuIdioma" class="btn btn-link btn-lg dropdown-toggle"
+								data-toggle="dropdown" data-i18n="idioma">Idioma <span class="caret"></span></button>
+							<ul class="dropdown-menu" role="menu">
+								<li role="presentation">
+									<a role="menuitem" href="#" data-locale="en" data-i18n="ingles"
+										class="switch-locale">Ingles</a>
+								</li>
+								<li role="presentation">
+									<a role="menuitem" href="#" data-locale="es" data-i18n="espanyol"
+										class="switch-locale">Español</a>
+								</li>
+								<li role="presentation">
+									<a role="menuitem" href="#" data-locale="gl" data-i18n="gallego"
+										class="switch-locale">Gallego</a>
+								</li>
+							</ul>
+						</li>
+					</ol>
+				</div>
+		</div>
+	</nav>
+
+	<div class="cuerpo">
+		<div class="container">
+			<!-- Página de inicio -->
+			<div id="capaInicio" role="tabpanel" aria-labelledby="buttonInicio">
+				<div class="row">
+					<div class="col-md-12">
+						<h1 class="lineasActuacion__title datosAbiertos-color" role="heading" aria-level="2" data-i18n="que_es_un_organigrama">Organigrama
+							municipal</h1>
+						<p class="home-header_text" data-i18n="texto_que_es_un_organigrama"></p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<iframe id="iframeOrganigrama" class="embed-responsive-item" src="organigrama.html?lang=es"
+							title="Bloque para el Organigrama"></iframe>
+					</div>
+				</div>
+			</div>
+			<!-- Página del buscador -->
+			<div id="capaBuscador" role="tabpanel" aria-labelledby="buttonBuscador">
+				<div class="row">
+					<div class="col-xs-12">
+						<iframe id="iframeBuscador" class="embed-responsive-item" src="buscador.html?lang=es"
+							title="Bloque para el Buscador"></iframe>
+					</div>
+				</div>
+			</div>
+			<!-- Página ayuda -->
+			<div id="capaAyuda" role="tabpanel" aria-labelledby="buttonAyuda">
+				<div class="row">
+					<div class="col-md-12" id="bloque_ayuda_que_es_subvencion">
+						<div class="panel panel_sin">
+							<div class="panel-heading" role="heading" aria-level="2">Texto de ayuda</div>
+							<div class="panel-body">
+								<p>Texto de ayuda</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12">
+						<div class="panel panel_sin">
+							<div class="panel-heading" role="heading" aria-level="2" data-i18n="glosario_terminos">
+								Glosario de términos
+							</div>
+							<div class="panel-body">
+								<ul>
+									<li>
+										<p>Termino 1</p>
+										<p>Definición Termino 1</p>
+									</li>
+									<li>
+										<p>Termino 2</p>
+										<p>Definición Termino 2</p>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Página de la ficha -->
+			<div id="capaFicha">
+				<!-- <div class="row">
+						<div class="col-md-12">
+							<iframe id="iframeFicha" class="embed-responsive-item" src="" title="Bloque para la ficha"></iframe>
+						</div>
+					</div>  -->
+			</div>
+		</div>
+	</div>
+
+	<!-- footer  -->
+	<footer class="novedades-footer">
+		<div class="footer__content">
+			<div class="footer__logos-container">
+				<div class="footer__logos-box">
+					<ul class="footer__logos-top">
+						<li class="footer__logos footer__logoGobEspaña">
+							<a href="http://www.mineco.gob.es/portal/site/mineco/" target="_blank">
+								<img title="Logo Gobierno de España. Abre una ventana nueva"
+									src="../comunV2/dist/images/gobEspana-logo.svg"
+									alt="Logo gobierno de España y Red.es. Abre una ventana nueva">
+							</a>
+						</li>
+						<li class="footer__logos footer__logoRed">
+							<a href="https://www.red.es/redes/" target="_blank">
+								<img title="Logo Red.es. Abre una ventana nueva" src="../comunV2/dist/images/red-logo.svg"
+									alt="Logo gobierno de España y Red.es. Abre una ventana nueva">
+							</a>
+						</li>
+						<li class="footer__logos footer__logoCiudadesInteligentes">
+							<a href="http://www.red.es/redes/es/que-hacemos/ciudades-inteligentes" target="_blank">
+								<img title="Logo del portal Ciudades e Islas Inteligentes. Abre una ventana nueva"
+									src="../comunV2/dist/images/ciudadesInteligentes-logo.svg"
+									alt="Logo del portal Ciudades e Islas Inteligentes. Abre una ventana nueva">
+							</a>
+						</li>
+						<li class="footer__logos footer__logoUnionEuropea">
+							<a href="http://ec.europa.eu/regional_policy/es/funding/erdf/" target="_blank">
+								<img title="Logo de la Unión Europea. Abre una ventana nueva"
+									src="../comunV2/dist/images/unionEuropea-logo.svg"
+									alt="Logo de la Unión Europea. Abre una ventana nueva">
+							</a>
+						</li>
+					</ul>
+					<ul class="footer__logos-bottom">
+						<li class="footer__logos footer__logoAcoruña">
+							<a href="https://www.coruna.gal" target="_blank">
+								<img title="Logo del Ayuntamiento de A Coruña. Abre una ventana nueva"
+									src="../comunV2/dist/images/ayuntAcoruna-logo.svg"
+									alt="Logo del Ayuntamiento de A coruña. Abre una ventana nueva">
+							</a>
+						</li>
+						<li class="footer__logos footer__logoMadrid">
+							<a href="https://www.madrid.es/" target="_blank">
+								<img title="Logo del Ayuntamiento de Madrid. Abre una ventana nueva"
+									src="../comunV2/dist/images/ayuntMadrid-logo.svg"
+									alt="Logo del Ayuntamiento de Madrid. Abre una ventana nueva">
+							</a>
+						</li>
+						<li class="footer__logos footer__logoSantiago">
+							<a href="http://santiagodecompostela.gal/" target="_blank">
+								<img title="Logo del Ayuntamiento de Santiago de Compostela. Abre una ventana nueva"
+									src="../comunV2/dist/images/ayuntSantiagoCompostela-logo.svg"
+									alt="Logo del Ayuntamiento de Santiago de Compostela. Abre una ventana nueva">
+							</a>
+						</li>
+						<li class="footer__logos footer__logoZaragoza">
+							<a href="https://www.zaragoza.es/sedeelectronica/" target="_blank">
+								<img title="Logo del Ayuntamiento de Zaragoza. Abre una ventana nueva"
+									src="../comunV2/dist/images/ayuntZaragoza-logo.svg"
+									alt="Logo del Ayuntamiento de Zaragoza. Abre una ventana nueva">
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="footer__bottom">
+				<div class="footer__logo-box">
+					<img class="footer__logoCiudadesAbiertas" title="Logo de Ciudades abiertas. Ir a inicio"
+						src="../comunV2/dist/images/logo.svg" alt="Logo de Ciudades abiertas. Ir a inicio">
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+	<!-- Multiidoma -->
+	<script src="vendor/CLDRPluralRuleParser/CLDRPluralRuleParser.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.min.js"></script>
+	<!-- Javascript -->
+	<script src="dist/js/constantes.js"></script>
+	<script src="dist/js/general.js"></script>
+	<script>
+
+		$(document).ready(function () {
+			$('.modal').modal('show');
+			initComun();
+		});
+	</script>
+
+</body>
+
+</html>

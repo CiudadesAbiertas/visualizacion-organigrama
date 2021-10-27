@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!--
+Copyright 2018 Ayuntamiento de A Coruña, Ayuntamiento de Madrid, Ayuntamiento de Santiago de Compostela, Ayuntamiento de Zaragoza, Entidad Pública Empresarial Red.es
+
+Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the European Commission - subsequent versions of the EUPL (the "Licence");
+You may not use this work except in compliance with the Licence.
+You may obtain a copy of the Licence at:
+
+https://joinup.ec.europa.eu/software/page/eupl
+
+Unless required by applicable law or agreed to in writing, software distributed under the Licence is distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the Licence for the specific language governing permissions and limitations under the Licence.
+-->
+<html lang="es" dir="ltr">
+
+<head>
+	<!-- Metadatos -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title data-i18n="ficha_organigrama"></title>
+	<!--Favicon-->
+	<link rel="shortcut icon" type="image/x-icon" href="../comunV2/dist/images/favicon.ico">
+
+	<!-- Bootstrap Core CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+
+	<!-- JQUERY UI CSS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<!-- Custom Fonts -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css" rel="stylesheet"
+        type="text/css" />
+
+	<!-- Mapa -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+	<!-- Hojas de estilos internos -->
+	<link rel="stylesheet" href="../comunV2/dist/css/main.css">
+	<link rel="stylesheet" href="../comunV2/dist/css/ciudadesAbiertas.css">
+	<link rel="stylesheet" href="dist/css/organigrama.css">
+	<link rel="stylesheet" href="dist/css/custom.css">
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+</head>
+
+<body class="fondoColor">
+	<div class="container-fluid ">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="row">
+					<div class="col-md-12 col-xs-12">
+						<div id="imagen_ficha"></div>
+					</div>
+					<div class="col-md-12 col-xs-12">
+						<div id="titleOrganigrama"></div>
+					</div>
+					<div class="col-md-12 col-xs-12">
+						<div class="" id="datos_ficha"></div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div id="datos_ubicacion_ficha"></div>
+				<div id="mapa_ficha"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div>
+				<button type="button" class="btn btn-primary photoWidth" onclick="abrirDiagramaUnidad()">Abrir
+					diagrama</button>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<!-- Scripts JavaScript -->
+
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+	<!-- jQuery UI-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<!-- Multiidoma -->
+	<script src="vendor/CLDRPluralRuleParser/CLDRPluralRuleParser.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.min.js"></script>
+
+	<!-- d3 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"
+        integrity="sha512-oJp0DdQuQQrRsKVly+Ww6fAN1GwJN7d1bi8UubpEbzDUh84WrJ2CFPBnT4LqBCcfqTcHR5OGXFFhaPe3g1/bzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="vendor/d3/canvas-toBlob.js"></script>
+	<script src="vendor/d3/FileSaver.min.js"></script>
+
+	<!-- Mapa -->
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+	<!-- Scripts internos -->
+	<script src="dist/js/constantes.js"></script>
+	<script src="dist/js/general.js"></script>
+	<script src="dist/js/fichaOrganigrama.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			initComun();
+			inicializaFichaOrganigrama();
+		});
+	</script>
+</body>
+
+</html>

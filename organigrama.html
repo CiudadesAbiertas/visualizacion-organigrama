@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<!--
+Copyright 2018 Ayuntamiento de A Coruña, Ayuntamiento de Madrid, Ayuntamiento de Santiago de Compostela, Ayuntamiento de Zaragoza, Entidad Pública Empresarial Red.es
+
+Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the European Commission - subsequent versions of the EUPL (the "Licence");
+You may not use this work except in compliance with the Licence.
+You may obtain a copy of the Licence at:
+
+https://joinup.ec.europa.eu/software/page/eupl
+
+Unless required by applicable law or agreed to in writing, software distributed under the Licence is distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the Licence for the specific language governing permissions and limitations under the Licence.
+-->
+<html lang="es" dir="ltr">
+
+<head>
+    <!-- Metadatos -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Visualización del organigrama">
+    <meta name="author" content="Localidata">
+    <title data-i18n="arbol_organigrama"></title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- JQUERY UI CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css" rel="stylesheet"
+        type="text/css">
+
+    <!-- Mapa -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+
+    <!-- Hojas de estilos internos -->
+    <link rel="stylesheet" href="../comunV2/dist/css/main.css">
+    <link rel="stylesheet" href="../comunV2/dist/css/ciudadesAbiertas.css">
+    <link rel="stylesheet" href="dist/css/organigrama.css">
+    <link rel="stylesheet" href="dist/css/custom.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="panel panel_sin">
+                <div class="modal fade" id="myModalIndicadores" tabindex="-1" role="dialog" aria-labelledby="modalLabelInc"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <p class="modal-title" id="modalLabelInc" data-i18n="incrustar_organigrama">
+                                </p>
+                            </div>
+                
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <p class="embed-content"
+                                        data-i18n="puede_copiar_pegar_codigo_insercion_cms_blog_soporte_html_crudo">
+                                    </p>
+                                    <label class="control-label" for="code" data-i18n="codigo"></label><br />
+                                    <textarea id="code" class="form-control" name="code" rows="3" placeholder="">
+                                                                    <iframe src="organigrama.html?lang=es" title="Visualizaciones de organigrama" height="600" width="100%"></iframe>
+                                                                </textarea>
+                                </div>
+                            </div>
+                
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body panel-body_sin">
+                    <div class="row" id="formulario">
+                        <!-- Panel de selección del nodo raiz -->
+                        <div id="botoneraIzqOrg" class="col-md-6 col-sm-6 col-xs-12">
+                            <div id="panelSeleccion">
+                                <div class="row lineForm">
+                                    <div class="col-sm-12">
+                                        <label for="selectNodoRaiz" class="col-form-label"  data-i18n="selecciona_entidad_raiz:"></label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" id="selectNodoRaiz"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Panel de selección del modo de visualizacion -->
+                        <div id="botoneraDerOrg" class="col-sm-offset-1 col-sm-offset-1 col-md-5 col-sm-5 col-xs-12">
+                            <label for="selectNodoRaiz" class="col-form-label"  data-i18n="selecciona_vista"></label>
+                            <button type="button" class=" btn btn-primary active" id="botonVistaArbol2"
+                                onclick="cambioCapaArbol2()">
+                                <span class="fa fa-sitemap"></span>
+                                <span data-i18n="vista_cajas"></span>
+                            </button>
+							<button type="button" class=" btn btn-primary" id="botonVistaListado"
+                                onclick="cambioCapaListado()">
+                                <span class="fa fa-indent"></span>
+                                <span data-i18n="vista_listado"></span>
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="row ">
+                        <div class="col-xs-12" id="tituloDragrama">
+                            <p id="hormigas">Organigrama Municipal</p>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <!-- Capa para el listado del organigrama -->
+                        <div class="col-xs-12 panel" id="listadoOrganigrama">
+                            <ul id="expList" class="paddingLeftNodoRaiz"></ul>
+                         </div>
+                    </div>
+                    <div class="row ">
+                        <!-- Capa para el árbol del organigrama -->
+                        <div class="col-xs-12 panel" id="arbolOrganigrama2">
+                                <div class="row panel-footer">
+                                    <!-- Barra de zoom para el árbol -->
+                                    <div id="botoneraIzqArbol" class="col-xs-5">
+                                        <button type="button" class="btn btn-light" id="botonReset"  onclick="reset()">
+											<span data-i18n="reset"></span>
+										</button>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-light" id="botonDescarga" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												<span data-i18n="descarga">Vista de listado</span>
+												<span class="caret"></span></button>
+                                            <ul class="dropdown-menu">
+                                                <li><a id="descargaAPICSV" href="#" target="_blank" data-i18n="descarga_csv">Descarga CSV</a></li>
+                                                <li><a id="descargaAPIJSON" href="#" target="_blank" data-i18n="descarga_json">Descarga JSON</a></li>
+                                                <li><a id="exportPNG" target="_blank" data-i18n="desgarga_png">Descarga PNG</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-light" id="botonPuntos"
+                                                data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">...</button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#" data-toggle="modal" data-target="#myModalIndicadores"
+                                                        data-i18n="incrustar">incrustar</a></li>
+                                                <li><a id="URL_APIGrafico" href="#" target="_blank"
+                                                        data-i18n="URL_grafico">URL Utilizada en el gráfico</a></li>
+                                                <li><a id="URL_APIDoc" href="" target="_blank"
+                                                        data-i18n="doc_API">Documentación API</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div id="botoneraDerArbol" class="col-xs-2 col-sm-offset-5">
+                                        <button type="button" class="btn btn-light" id="botonMaximizar"
+                                            onclick="maximixar()"><span class="glyphicon glyphicon-fullscreen"
+                                                aria-hidden="true"></span></button>
+                                        <button type="button" class="btn btn-light" id="botonZoomIn"><span
+                                                class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></button>
+                                        <button type="button" class="btn btn-light" id="botonZoomOut"><span
+                                                class="glyphicon glyphicon-zoom-out" aria-hidden="true"></span></button>
+                                    </div>
+                                    <!-- <div class="col-xs-3 sliderZoom">
+                                            <p id="pSliderZoom">
+                                                <label for="barraZoom">Zoom</label>
+                                            </p>
+                                        </div> -->
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="panel-body-org-2">
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modal_info" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p class="modal-title" id="modalLabelInf" data-i18n="informacion">Información</p>
+                    </div>
+                    <div class="modal-body">
+                        <p><span class="textoNegrita" data-i18n="vistaArbol">Vista de árbol:</span></p>
+                        <p data-i18n="textoVistaArbol">Para desplazarse por el diagrama cuando este sea más grande que
+                            la pantalla. Se puede usar la barra de zoom, o se puede arrastrar el ratón con el botón
+                            izquierdo pulsado</p>
+                        <p><span class="textoNegrita" data-i18n="vistaListado">Vista de listado:</span></p>
+                        <p data-i18n="textoVistaListado">Para navegar por el diagrama habra que hacer clic en el
+                            elemento del listado.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                            data-i18n="cerrar">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade " id="modalFicha" tabindex="-1" role="dialog" aria-labelledby="iframeFichaModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="fondoColor  modal-content">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <iframe id="iframeFicha" class="embed-responsive-item" src=""  title="Bloque para la ficha"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+    <!-- jQuery UI-->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- Multiidoma -->
+    <script src="vendor/CLDRPluralRuleParser/CLDRPluralRuleParser.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.min.js"></script>
+
+
+    <!-- d3 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"
+        integrity="sha512-oJp0DdQuQQrRsKVly+Ww6fAN1GwJN7d1bi8UubpEbzDUh84WrJ2CFPBnT4LqBCcfqTcHR5OGXFFhaPe3g1/bzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="vendor/d3/canvas-toBlob.js"></script>
+    <script src="vendor/d3/FileSaver.min.js"></script>
+
+    <!-- Mapa -->
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+
+    <!-- Internas -->
+    <script src="dist/js/constantes.js"></script>
+    <script src="dist/js/general.js"></script>
+    <script src="dist/js/organigrama.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            initComun();
+            inicializaOrganigrama();
+            $('botonVistaArbol').addClass("active");
+        });
+    </script>
+
+</body>
+
+</html>

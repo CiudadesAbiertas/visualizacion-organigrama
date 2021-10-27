@@ -1,0 +1,420 @@
+/*
+Copyright 2018 Ayuntamiento de A Coruña, Ayuntamiento de Madrid, Ayuntamiento de Santiago de Compostela, Ayuntamiento de Zaragoza, Entidad Pública Empresarial Red.es
+
+Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the European Commission - subsequent versions of the EUPL (the "Licence");
+You may not use this work except in compliance with the Licence.
+You may obtain a copy of the Licence at:
+
+https://joinup.ec.europa.eu/software/page/eupl
+
+Unless required by applicable law or agreed to in writing, software distributed under the Licence is distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the Licence for the specific language governing permissions and limitations under the Licence.
+*/
+
+
+
+
+
+.titul {
+  padding: 3px 50px 0px 5px;
+  color: white;
+  font-size: 16px;
+}
+
+.enlaceDetalle {
+  cursor: pointer;
+  margin-left: 20px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+.enlaceTitulo {
+  cursor: pointer;
+  cursor: pointer;
+  font-weight: bold;
+}
+.panel-body em {
+  font-size: 140%;
+  padding-top: 5px;
+}
+
+.panel-primary > .panel-heading {
+  background-color: #006aa0;
+  border-color: #006aa0;
+  padding-bottom: 10px;
+}
+
+.panel-primary > .panel-body {
+  padding-left: 0px;
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+}
+
+.panel {
+  margin-bottom: 3px;
+  min-width: 400px;
+}
+
+.photoCircle {
+  width: 100px;
+  border-radius: 50%;
+  padding: 0;
+  border: 0;
+  -webkit-box-shadow: 0 5px 3px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 5px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 5px 3px rgba(0, 0, 0, 0.5);
+}
+
+.fotto {
+  float: right;
+  margin: -15px 0 0 0;
+  z-index: 100;
+  position: relative;
+  top: 0px;
+}
+.titOrg {
+  padding-left: 20px;
+  text-align: center;
+}
+.photoSquare {
+  width: 75px;
+  background-color: red;
+  border: 0;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  margin-left: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+}
+
+.caja {
+  border: none;
+  border-radius: 0;
+  box-shadow: 2px 3px 8px 2px rgba(235, 235, 235, 1);
+  padding: 0px 0px 0px 0px;
+}
+
+.fotocargo {
+  float: left;
+  padding: 10px 10px 10px 10px;
+  margin: 10px;
+  border: 1px solid #9e9b98;
+}
+
+
+.padding-caja-listado {
+  padding-left: 0px;
+  padding-top: 10px;
+}
+.dato-ficha {
+  padding-left: 10px;
+}
+.headingPadding {
+  padding: 0px 0px;
+}
+
+.footerPadding {
+  padding: 0px 0px;
+}
+
+.paddingLeftNodoRaiz {
+  padding-left: 0px;
+}
+
+#expList ul {
+  list-style: none;
+  /* margin:0; */
+  padding: 0;
+  /* cursor: pointer; */
+  margin-left: 90px;
+  /* margin-right: -90px; */
+  /* border-left: 5px solid #006AA0; */
+  padding-left: 5px;
+}
+
+@media (max-width: 479px) {
+  #expList ul {
+    list-style: none;
+    /* margin:0; */
+    padding: 0;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: -5px;
+    /* border-left: 5px solid #006AA0; */
+    padding-left: 5px;
+  }
+}
+
+#expList ul:first-child {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+#expList li {
+  list-style: none;
+  /* margin:0; */
+  /* padding: 0; */
+  /* cursor: pointer; */
+  /* text-indent:0px; */
+  /* background-position: 1px 8px; */
+  /* padding-left: 20px; */
+  /* margin-right: 100px; */
+  /* background-repeat: no-repeat; */
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+#expList .el_collapsed {
+  background-image: url("../comunV2/dist/images/collapsed.png");
+}
+
+#expList .el_expanded {
+  background-image: url("../comunV2/dist/images/expanded.png");
+}
+
+#mapaOrganigrama {
+  display: block;
+  margin: auto;
+  width: 300px;
+  height: 85px;
+  position: absolute;
+}
+
+#mapaBuscador {
+  display: block;
+  margin: 30px 0px 0px 0px;
+  height: 200px;
+}
+
+#mapaFicha {
+  display: block;
+  margin: 30px 0px 0px 0px;
+  height: 200px;
+}
+
+rect.rectangulo-hijos.hover {
+  transform: rotate(6deg);
+}
+rect.rectangulo-hijos {
+  transform: rotate(2deg);
+  transition: transform 0.3s ease;
+}
+rect.rectangulo-hijos2.hover {
+  transform: rotate(-6deg);
+}
+rect.rectangulo-hijos2 {
+  transform: rotate(-2deg);
+  transition: transform 0.3s ease;
+}
+
+rect.rectangulo-texto.hover {
+  fill: #f7f7f7;
+}
+
+.activo rect.barra-enlaces {
+  fill: #6f9fbb;
+}
+.cuadro-nodo-enlaces {
+  display: block;
+  width: 10vw;
+  max-height: 15px;
+  max-width: 150px;
+}
+
+.enlaces-nodo {
+  min-width: 100px;
+  display: block;
+  height: auto;
+  position: relative;
+  text-align: center;
+  font-size: 11px;
+  background-color: white;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  opacity: 1;
+}
+.cuadro-nodo-enlaces a {
+  opacity: 1;
+  margin: 0 3px;
+  color: 0.8;
+}
+
+.cuadro-nodo-texto {
+  position: fixed;
+  width: 10vw;
+  max-width: 150px;
+  display: block;
+  transform: translate(-50%, 0);
+}
+
+.texto-nodo {
+  min-width: 100px;
+  display: block;
+  height: auto;
+  position: relative;
+  text-align: center;
+  font-size: 11px;
+  background-color: white;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  opacity: 1;
+}
+.cuadro-nodo-texto .fa-info-circle {
+  position: absolute;
+  top: -7px;
+  left: 48%;
+  color: #bbb;
+  z-index: 100000;
+  cursor: pointer;
+}
+
+.cf:before,
+.cf:after {
+  content: " "; /* 1 */
+  display: table; /* 2 */
+}
+
+.cf:after {
+  clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+  *zoom: 1;
+  border: 1px dotted #eee;
+}
+
+/*.node text {
+  fill: #FFFFFF;
+}*/
+
+.linea-horizonal {
+  border-bottom: 1px solid #006aa0;
+  margin-left: 9px;
+  border-top-width: 10px;
+  padding-top: 50px;
+}
+
+.linea-horizonal-2 {
+  border-bottom: 1px solid #006aa0;
+  margin-left: 12px;
+  margin-right: 2px;
+  border-top-width: 10px;
+  padding-top: 50px;
+}
+
+.border-left-color {
+  border-left: 1px solid #91a2aa;
+  padding-left: 5px;
+}
+
+.COLOR_JERARQUIA1 {
+  background-color: #006aa0 !important;
+}
+
+.COLOR_JERARQUIA2 {
+  background-color: #fcd579 !important;
+}
+
+.COLOR_JERARQUIA3 {
+  background-color: #fca8bf !important;
+}
+
+.COLOR_JERARQUIA4 {
+  background-color: #ffb793 !important;
+}
+
+.COLOR_JERARQUIA5 {
+  background-color: #87d7fe !important;
+}
+
+.COLOR_JERARQUIA6 {
+  background-color: #d2f9b6 !important;
+}
+
+.COLOR_JERARQUIA7 {
+  background-color: #8299a9 !important;
+}
+
+.COLOR_JERARQUIA8 {
+  background-color: #eed6cc !important;
+}
+
+.COLOR_JERARQUIA9 {
+  background-color: #ecdcf5 !important;
+}
+
+.COLOR_JERARQUIA10 {
+  background-color: #f2f7a6 !important;
+}
+
+.COLOR_JERARQUIA11 {
+  background-color: #fca8bf !important;
+}
+
+.COLOR_JERARQUIA12 {
+  background-color: #bfbfff !important;
+}
+
+.COLOR_JERARQUIA13 {
+  background-color: #ccff99 !important;
+}
+
+.colorLipstick {
+  color: #d72553;
+}
+
+/* .modal {
+  position: absolute;
+  top: -31px;
+  right: unset;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  outline: 0;
+} */
+
+.modal-open {
+  overflow: hidden;
+}
+
+.close {
+  font-size: 31px;
+  color: #d72553;
+  margin-right: 10px;
+  font-weight: 100;
+}
+
+.link {
+  stroke-width: 1px;
+}
+
+#botoneraIzqOrg {
+    padding-left: 0px;
+}
+
+#botoneraDerOrg {
+    padding-right: 0px; 
+    text-align: right;
+}
+
+#botoneraIzqArbol {
+    text-align: ledt;
+}
+
+#botoneraDerArbol {
+    text-align: right;
+}
+
+#tituloDragrama {
+    margin-bottom: 20px;
+    padding-left: 0px;
+}
