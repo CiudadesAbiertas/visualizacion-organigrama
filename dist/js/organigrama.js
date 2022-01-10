@@ -127,13 +127,16 @@ function preparaLista() {
                 contentHMTL = contentHMTL + '<div class="panel-body" >';
                 contentHMTL = contentHMTL + '<div class="row">';
                 contentHMTL = contentHMTL + '<div class="col-md-3 hidden-xs fotto">';
-                contentHMTL =
-                    contentHMTL +
-                    '<img class="photoSquare" src="' +
-                    data.records[n].image +
-                    '" alt="Imagen de ' +
-                    data.records[n].title +
-                    '">';
+                if(data.records[n].image) {
+                    contentHMTL =
+                      contentHMTL +
+                      '<img class="photoSquare" src="' +
+                      data.records[n].image +
+                      '" alt="Imagen de ' +
+                      data.records[n].title +
+                      '">';
+                }
+                
                 contentHMTL = contentHMTL + "</div>";
                 contentHMTL = contentHMTL + '<div class="col-md-9 col-xs-12 titOrg">';
                 contentHMTL =
@@ -295,13 +298,16 @@ function anyadeHijosListado(idPadre) {
                     ) {
                         contentHMTL =
                             contentHMTL + '<div class="col-md-3 hidden-xs fotto">';
-                        contentHMTL =
-                            contentHMTL +
-                            '<img class="photoCircle" src="' +
-                            data.records[n].image +
-                            '" alt="Imagen de ' +
-                            data.records[n].title +
-                            '">';
+                        if(data.records[n].image) {
+                            contentHMTL =
+                              contentHMTL +
+                              '<img class="photoCircle" src="' +
+                              data.records[n].image +
+                              '" alt="Imagen de ' +
+                              data.records[n].title +
+                              '">';
+                        }
+                            
                         contentHMTL = contentHMTL + "</div>";
                         contentHMTL =
                             contentHMTL + '<div class="col-md-9 col-xs-12 titOrg">';
@@ -517,7 +523,10 @@ function obtieneDatosAPI(url) {
                 nodos[data.records[h].id].desc = data.records[h].title;
                 nodos[data.records[h].id].nivelJerarquico =
                     data.records[h].nivelJerarquico;
-                nodos[data.records[h].id].image = data.records[h].image;
+                if(data.records[h].image) {
+                    nodos[data.records[h].id].image = data.records[h].image;
+                }
+                
                 nodos[data.records[h].id].headOfName = data.records[h].headOfName;
                 nodos[data.records[h].id].hasChild = false;
                 nodos[data.records[h].id].extraDepth = 0;
@@ -535,7 +544,9 @@ function obtieneDatosAPI(url) {
                 nodos[data.records[h].id].nivelJerarquico =
                     data.records[h].nivelJerarquico;
                 nodos[data.records[h].id].unitOf = data.records[h].unitOf;
-                nodos[data.records[h].id].image = data.records[h].image;
+                if(!data.records[h].image) {
+                    nodos[data.records[h].id].image = data.records[h].image;
+                }
                 nodos[data.records[h].id].headOfName = data.records[h].headOfName;
                 nodos[data.records[h].id].hasChild = false;
                 nodos[data.records[h].id].extraDepth = 0;
@@ -727,7 +738,7 @@ function inicializaArbolOrganigrama2() {
             _fontWeight = 'bold',
             _idNodo = '',
             _nodosSinColapsar = new Array(),
-            /* El texto empieza en la coordenada 90 y esta letiable es el espacio que restamos para que empiece más alto */
+            /* El texto empieza en la coordenada 90 y esta variable es el espacio que restamos para que empiece más alto */
             _espacioEncimaTexto = 50,
             _collapseCircleRadius = 17,
             // _FICHA_SIMBOLO = '\uf022',
@@ -774,7 +785,8 @@ function inicializaArbolOrganigrama2() {
             //Función que actualiza el árbol
             (update = function (source) {
                 // Compute the new tree layout.
-                _nodes = _tree.nodes(_root).reverse();
+                // _nodes = _tree.nodes(_root).reverse();
+                _nodes = _tree.nodes(_root);
                 let links = _tree.links(_nodes);
 
                 // Normalize for fixed-depth.
@@ -900,10 +912,10 @@ function inicializaArbolOrganigrama2() {
                         if (d.desc) {
                             if (d.desc.length < 29) {
                                 _yTextoJefe = _yTextoEntidad + 20;
-                            } else if (d.desc.length > 29 && d.desc.length < 60) {
+                            } else if (d.desc.length > 29 && d.desc.length < 51) {
                                 _yTextoJefe = _yTextoEntidad + 47;
-                            } else if (d.desc.length > 60 ) {
-                                _yTextoJefe = _yTextoEntidad + 102;
+                            } else if (d.desc.length > 51 ) {
+                                _yTextoJefe = _yTextoEntidad + 92;
                             }
                         } else {
                             _yTextoJefe = _yTextoEntidad;
@@ -1092,20 +1104,40 @@ function inicializaArbolOrganigrama2() {
                         })
                         .attr('d', function (d) {
                             let u_line = (function (d2) {
-                                let u_linedata = [
-                                    {
-                                        x: d2.source.x0 + parseInt(_rectW / 2),
-                                        y: d2.source.y0 + _rectH + 2,
-                                    },
-                                    {
-                                        x: d2.source.x0 + parseInt(_rectW / 2),
-                                        y: d2.source.y0 + _rectH + 2,
-                                    },
-                                    {
-                                        x: d2.source.x0 + parseInt(_rectW / 2),
-                                        y: d2.source.y0 + _rectH + 2,
-                                    },
-                                ];
+                                let u_linedata;
+                                if(d2.source.x0) {
+                                    u_linedata = [
+                                        {
+                                            x: d2.source.x0 + parseInt(_rectW / 2),
+                                            y: d2.source.y0 + _rectH + 2,
+                                        },
+                                        {
+                                            x: d2.source.x0 + parseInt(_rectW / 2),
+                                            y: d2.source.y0 + _rectH + 2,
+                                        },
+                                        {
+                                            x: d2.source.x0 + parseInt(_rectW / 2),
+                                            y: d2.source.y0 + _rectH + 2,
+                                        },
+                                    ];
+                                } else {
+                                    u_linedata = [
+                                        {
+                                            x: d2.source.x + parseInt(_rectW / 2),
+                                            y: d2.source.y + _rectH + 2,
+                                        },
+                                        {
+                                            x: d2.source.x + parseInt(_rectW / 2),
+                                            y: d2.source.y + _rectH + 2,
+                                        },
+                                        {
+                                            x: d2.source.x + parseInt(_rectW / 2),
+                                            y: d2.source.y + _rectH + 2,
+                                        },
+                                    ];
+                                }
+
+                                
 
                                 return u_linedata;
                             })(d);
@@ -1119,6 +1151,13 @@ function inicializaArbolOrganigrama2() {
                         .duration(_duration)
                         .attr('d', function (d) {
                             let u_line = (function (d2) {
+                                let _espacio;
+                                if(d2.source.image) {
+                                    _espacio = _espacioExtraLineaHijos;        
+                                }
+                                else {
+                                    _espacio = _espacioExtraLineaPadre;
+                                }
                                 let u_linedata = [
                                     {
                                         x: d2.source.x + parseInt(_rectW / 2),
@@ -1126,11 +1165,12 @@ function inicializaArbolOrganigrama2() {
                                     },
                                     {
                                         x: d2.source.x + parseInt(_rectW / 2),
-                                        y: d2.target.y - _margin.top / 2 - _espacioExtraLineaHijos,
+                                        
+                                        y: d2.target.y - _margin.top / 2 - _espacio,
                                     },
                                     {
                                         x: d2.target.x + parseInt(_rectW / 2),
-                                        y: d2.target.y - _margin.top / 2 - _espacioExtraLineaHijos,
+                                        y: d2.target.y - _margin.top / 2 - _espacio,
                                     },
                                 ];
 

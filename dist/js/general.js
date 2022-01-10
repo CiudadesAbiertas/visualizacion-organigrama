@@ -314,15 +314,21 @@ function modificaTaskMaster(attr) {
 }
 
 /* Función que pide los datos para una ficha y los inserta con jquery */
-function dameFicha(title) {
+function dameFicha(title, iframe) {
     if (LOG_DEBUG_COMUN) {
         console.log('dameFicha');
     }
     let url = 'fichaOrganigrama.html?lang=' + $.i18n().locale;
     url = url + '&nombre=' + title + '&capa=capaInicio';
 
-    $('#iframeFicha').attr('src', url);
-    $('#iframeFicha').height($(document).height());
+    if(iframe){
+        $('#iframeFicha', window.parent.document).attr('src', url);
+        $('#iframeFicha', window.parent.document).height($(document).height());
+    }else {
+        $('#iframeFicha').attr('src', url);
+        $('#iframeFicha').height($(document).height());
+    }
+    
 
     $('html,body', window.parent.document).scrollTop(0);
 }

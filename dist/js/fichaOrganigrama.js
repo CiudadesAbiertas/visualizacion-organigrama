@@ -112,12 +112,15 @@ function obtieneDatosFicha(title) {
             paramId = data.records[0].id;
         }
 
-        let htmlImagen =
-            '<img class="photoWidth photoCircle" src="' +
-            data.records[0].image +
-            '" alt="Imagen de ' +
-            data.records[0].title +
-            '">';
+        let htmlImagen = '';
+        if(data.records[0].image) {
+            htmlImagen =
+              '<img class="photoWidth photoCircle" src="' +
+              data.records[0].image +
+              '" alt="Imagen de ' +
+              data.records[0].title +
+              '">';
+        }
         if (data.records[0].headOfName) {
             if (data.records[0].url) {
                 htmlImagen =
@@ -195,7 +198,7 @@ function obtieneDatosFicha(title) {
                 $("#organoResponsable" + unitOf).append(
                     ' <a class="enlaceDetalle" onclick="dameFicha(\'' +
                         data2.records[0].title +
-                        "');\" >" +
+                        "',true);\" >" +
                         data2.records[0].title +
                         "</a>"
                 );
@@ -232,25 +235,27 @@ function obtieneDatosFicha(title) {
     jqxhr.always(function (data) {
         let lat = data.records[0].latitud;
         let lon = data.records[0].longitud;
-        let mymap = L.map('mapaFicha');
-        if (mymap) {
-            mymap.setView([lat, lon], 15);
+        if (data.records[0].latitud && data.records[0].longitud) {
+            let mymap = L.map('mapaFicha');
+            if (mymap) {
+                mymap.setView([lat, lon], 15);
 
-            // Este MAP_BOX_TILES usa un access token es con el usuaro de ciudadesAbiertas@localidata.com
-            L.tileLayer(MAP_BOX_TILES, {
-                maxZoom: 18,
-                id: 'mapbox.streets',
-            }).addTo(mymap);
+                // Este MAP_BOX_TILES usa un access token es con el usuaro de ciudadesAbiertas@localidata.com
+                L.tileLayer(MAP_BOX_TILES, {
+                    maxZoom: 18,
+                    id: 'mapbox.streets',
+                }).addTo(mymap);
 
-            L.marker([lat, lon]).addTo(mymap).openPopup();
+                L.marker([lat, lon]).addTo(mymap).openPopup();
 
-            let popup = L.popup();
+                let popup = L.popup();
 
-            function onMapClick(e) {
-                popup.setLatLng(e.latlng).setContent(e.latlng.toString()).openOn(mymap);
+                function onMapClick(e) {
+                    popup.setLatLng(e.latlng).setContent(e.latlng.toString()).openOn(mymap);
+                }
+
+                mymap.on('click', onMapClick);
             }
-
-            mymap.on('click', onMapClick);
         }
     });
 }
