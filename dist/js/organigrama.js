@@ -544,7 +544,7 @@ function obtieneDatosAPI(url) {
                 nodos[data.records[h].id].nivelJerarquico =
                     data.records[h].nivelJerarquico;
                 nodos[data.records[h].id].unitOf = data.records[h].unitOf;
-                if(!data.records[h].image) {
+                if(data.records[h].image) {
                     nodos[data.records[h].id].image = data.records[h].image;
                 }
                 nodos[data.records[h].id].headOfName = data.records[h].headOfName;
@@ -1152,7 +1152,7 @@ function inicializaArbolOrganigrama2() {
                         .attr('d', function (d) {
                             let u_line = (function (d2) {
                                 let _espacio;
-                                if(d2.source.image) {
+                                if(d2.target.image) {
                                     _espacio = _espacioExtraLineaHijos;        
                                 }
                                 else {
