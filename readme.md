@@ -1,7 +1,7 @@
 ------------
 Instalación
 ------------
-
+Para que la instalación esté al 100% hay que incluir a la visualización una cabecera, un pie, personalizar el CSS y los textos, para que tenga la forma corporativa de donde se va a alojar la visualización.
 Para desplegar la visualización habrá que copiar los ficheros en un servidor web, como apache.
 
 ------------
@@ -13,21 +13,15 @@ La configuración de la visualización se encuentra en::
 	dist/js/general.js
 
 Variable para las querys de la API:
-
 * URL_API, esta variable debede tener la URL de la API. Ej. "https://api.ciudadesabiertas.com/OpenCitiesAPI"
 * ORGANIGRAMA_URL, esta variable debede tener el parámetro de los datos de organigrama. Ej. "/organigrama/organizacion"
 * DOC_API, esta variable debe de tener la URL de la documentación de la API de organigrama. Ej. URL_API + "/swagger/index.html#/Organigrama"
 
 Variable para la SEGURIDAD:
-
 * SEGURIDAD, poner true para que la visualización use SEGURIDAD en las llamadas a la API.
 
 Variables de depuración:
-
-* LOG_DEBUG_COMUN, variable para habilitar la depuración del módulo común
-* LOG_DEBUG_ORGANIGRAMA, variable para habilitar la depuración del módulo organigrama
-* LOG_DEBUG_BUSCADOR, variable para habilitar la depuración del módulo buscador
-* LOG_DEBUG_FICHA_ORGANIGRAMA, variable para habilitar la depuración de la ficha
+* logDebugXXX, variable para habilitar la depuración del módulo
 
 Variable para configurar los mapas:
 
@@ -58,7 +52,16 @@ Y los literales de las tablas están en::
     vendor\datatables\i18n\es.json
     vendor\datatables\i18n\gl.json
     vendor\datatables\i18n\en.json
-    
+
+------------
+Navegadores compatibles
+------------
+Esta visualización ha sido probada en los navedores:
+* Firefox 76
+* Google Chrome 81
+* Microsoft Edge 103.0
+* Internet explorer 11
+
 ------------
 Licencia
 ------------
